@@ -18,7 +18,7 @@ namespace SportsStore2.WebUI.Controllers
         // GET: Product
         public ActionResult List()
         {
-            return View();
+            return View(repository.Products);
         }
     }
 }
