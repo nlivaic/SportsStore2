@@ -5,9 +5,10 @@
 }
 
 <h2>List</h2>
-
-@foreach (var item in Model) {
-    <p>@item.Name</p>
-    <p>@item.Description</p>
-    <p>@item.Price.ToString("c")</p>
-}
+<div class="item">
+    @foreach (var item in Model) {
+        <h2>@item.Name</h2>
+        <h3>@item.Description</h3>
+        <h3>@item.Price.ToString("c")</h3>
+    }
+</div>
