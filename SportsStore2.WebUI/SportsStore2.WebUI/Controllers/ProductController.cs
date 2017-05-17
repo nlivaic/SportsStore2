@@ -1,4 +1,5 @@
 ﻿using SportsStore2.Domain.Abstract;
+using SportsStore2.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,17 @@ namespace SportsStore2.WebUI.Controllers
         }
 
         // GET: Product
-        public ViewResult List()
+        public ViewResult List(int page = 1)
         {
-            return View(repository.Products);
+            ListViewModel viewModel = new ListViewModel {
+                PagingInfo = new PagingInfo {
+                    CurrentPage = page,
+                    PageSize = 4,
+                    TotalItems = repository.Products.Count()
+                },
+                Products = repository.Products
+            };
+            return View(viewModel);
         }
     }
 }
