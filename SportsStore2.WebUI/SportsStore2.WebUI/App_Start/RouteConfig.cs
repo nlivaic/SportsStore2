@@ -14,9 +14,19 @@ namespace SportsStore2.WebUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
+                name: "",
+                url: "Page{page}",
                 defaults: new { controller = "Product", action = "List", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Default",
+                url: "",
+                defaults: new { controller = "Product", action = "List", page = 1, id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "",
+                url: "{controller}/{action}",
+                defaults: new { id = UrlParameter.Optional }
             );
         }
     }
