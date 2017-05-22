@@ -8,5 +8,9 @@ using System.Web;
 namespace SportsStore2.Domain.Concrete {
     public class EFDbContext : DbContext {
         public DbSet<Product> Products { get; set; }
+
+        public EFDbContext() {
+            Database.SetInitializer<EFDbContext>(null);
+        }
     }
 }
