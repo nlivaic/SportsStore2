@@ -67,7 +67,7 @@ namespace SportsStore2.Tests {
             ProductController target = new ProductController(mock.Object);
 
             // Act
-            Product[] result = ((ListViewModel)(target.List(2).Model)).Products.ToArray();
+            Product[] result = ((ListViewModel)(target.List(null, 2).Model)).Products.ToArray();
 
             // Assert
             Assert.IsTrue(result[0].ProductId == 5);
@@ -82,13 +82,51 @@ namespace SportsStore2.Tests {
             ProductController target = new ProductController(mock.Object);
 
             // Act
-            PagingInfo result = ((ListViewModel)(target.List(2).Model)).PagingInfo;
+            PagingInfo result = ((ListViewModel)(target.List(null, 2).Model)).PagingInfo;
 
             // Assert
             Assert.IsTrue(result.CurrentPage == 2);
             Assert.IsTrue(result.NrOfPages == 3);
             Assert.IsTrue(result.TotalItems == 9);
             Assert.IsTrue(result.PageSize == 4);
+        }
+
+        [TestMethod]
+        public void Can_Display_Categories() {
+            // Arrange
+            ProductController target = new ProductController(mock.Object);
+
+            // Act
+            CategoryViewModel result = (CategoryViewModel)(target.ListCategories("Cat1").Model);
+            string[] categories = result.Categories.ToArray();
+
+            // Assert
+            Assert.IsTrue(result.ChosenCategory == "Cat1");
+            Assert.IsTrue(categories[0] == "Cat1");
+            Assert.IsTrue(categories[1] == "Cat2");
+            Assert.IsTrue(categories[2] == "Cat3");
+            Assert.IsTrue(categories[3] == "Cat4");
+        }
+
+        [TestMethod]
+        public void Can_Filter_By_Category() {
+            // Arrange
+            ProductController target = new ProductController(mock.Object);
+
+            // Act
+            ListViewModel result = ((ListViewModel)(target.List("Cat1", 1).Model));
+            Product[] products = result.Products.ToArray();
+            PagingInfo pagingInfo = result.PagingInfo;
+
+            // Assert - Product List
+            Assert.IsTrue(products[0].ProductId == 1);
+            Assert.IsTrue(products[1].ProductId == 3);
+            Assert.IsTrue(products[2].ProductId == 9);
+            // Assert - Paging info
+            Assert.IsTrue(pagingInfo.CurrentPage == 1);
+            Assert.IsTrue(pagingInfo.NrOfPages == 1);
+            Assert.IsTrue(pagingInfo.PageSize == 4);
+            Assert.IsTrue(pagingInfo.TotalItems == 3);
         }
     }
 }
