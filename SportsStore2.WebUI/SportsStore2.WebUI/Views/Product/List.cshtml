@@ -9,5 +9,5 @@
     Html.RenderPartial("ProductSummary", item);
 }
 <div class="pager">
-    @Html.PageLinks(Model.PagingInfo, (x => Url.Action("List", "Product", new { page = x })))
+    @Html.PageLinks(Model.PagingInfo, (x => Url.Action("List", "Product", new { category = Model.SelectedCategory, page = x })))
 </div>

@@ -34,7 +34,8 @@ namespace SportsStore2.WebUI.Controllers
                     PageSize = pageSize,
                     TotalItems = repository.Products.Where(p => category == null || p.Category == category).Count()
                 },
-                Products = repository.Products.Where(p => category == null || p.Category == category).OrderBy(x => x.ProductId).Skip((page - 1) * pageSize).Take(pageSize)
+                Products = repository.Products.Where(p => category == null || p.Category == category).OrderBy(x => x.ProductId).Skip((page - 1) * pageSize).Take(pageSize),
+                SelectedCategory = category
             };
             return View(viewModel);
         }
