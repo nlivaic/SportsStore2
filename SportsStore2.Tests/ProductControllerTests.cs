@@ -122,6 +122,18 @@ namespace SportsStore2.Tests {
             Assert.IsTrue(products[0].ProductId == 1);
             Assert.IsTrue(products[1].ProductId == 3);
             Assert.IsTrue(products[2].ProductId == 9);
+        }
+
+        [TestMethod]
+        public void Can_Create_Paging_Info_By_Category() {
+            // Arrange
+            ProductController target = new ProductController(mock.Object);
+
+            // Act
+            ListViewModel result = ((ListViewModel)(target.List("Cat1", 1).Model));
+            Product[] products = result.Products.ToArray();
+            PagingInfo pagingInfo = result.PagingInfo;
+
             // Assert - Paging info
             Assert.IsTrue(pagingInfo.CurrentPage == 1);
             Assert.IsTrue(pagingInfo.NrOfPages == 1);
