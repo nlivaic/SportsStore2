@@ -19,14 +19,14 @@ namespace SportsStore2.WebUI.Controllers
 
         public PartialViewResult ListCategories(string category) {
             CategoryViewModel categoryVM = new CategoryViewModel {
-                Categories = repository.Products.Select(p => p.Category).Distinct().AsEnumerable<string>(),
+                Categories = repository.Products.OrderBy(p => p.Category).Select(p => p.Category).Distinct().AsEnumerable<string>(),
                 ChosenCategory = category
             };
             return PartialView(categoryVM);
         }
 
         // GET: Product
-        public ViewResult List(string category, int page = 1)
+        public ViewResult List(string category = null, int page = 1)
         {
             ListViewModel viewModel = new ListViewModel {
                 PagingInfo = new PagingInfo {
