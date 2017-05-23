@@ -17,16 +17,24 @@ namespace SportsStore2.WebUI.Controllers
             repository = repo;
         }
 
+        public PartialViewResult ListCategories(string category) {
+            CategoryViewModel categoryVM = new CategoryViewModel {
+                Categories = repository.Products.Select(p => p.Category).Distinct().AsEnumerable<string>(),
+                ChosenCategory = category
+            };
+            return PartialView(categoryVM);
+        }
+
         // GET: Product
-        public ViewResult List(int page = 1)
+        public ViewResult List(string category, int page = 1)
         {
             ListViewModel viewModel = new ListViewModel {
                 PagingInfo = new PagingInfo {
                     CurrentPage = page,
                     PageSize = pageSize,
-                    TotalItems = repository.Products.Count()
+                    TotalItems = repository.Products.Where(p => category == null || p.Category == category).Count()
                 },
-                Products = repository.Products.OrderBy(x => x.ProductId).Skip((page - 1) * pageSize).Take(pageSize)
+                Products = repository.Products.Where(p => category == null || p.Category == category).OrderBy(x => x.ProductId).Skip((page - 1) * pageSize).Take(pageSize)
             };
             return View(viewModel);
         }
