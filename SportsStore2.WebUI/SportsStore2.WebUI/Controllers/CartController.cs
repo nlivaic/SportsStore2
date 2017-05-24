@@ -26,14 +26,17 @@ namespace SportsStore2.WebUI.Controllers
 
         public RedirectToRouteResult AddToCart(int productId, string returnUrl = null) {
             Cart cart = CreateShoppingCart();
-            cart.AddToCart(productId);
+            Product product = repository.Products.Where(p => p.ProductId == productId).FirstOrDefault();
+            if (product != null) {
+                cart.AddToCart(product);
+            }
             return RedirectToAction("Summary");
         }
 
         private Cart CreateShoppingCart() {
             Cart cart = (Cart)Session["cart"];
             if (cart == null) {
-                cart = new Cart(repository);
+                cart = new Cart();
                 Session["cart"] = cart;
             }
             return cart;
