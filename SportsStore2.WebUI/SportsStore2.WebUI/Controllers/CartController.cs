@@ -18,9 +18,8 @@ namespace SportsStore2.WebUI.Controllers
         }
 
         // GET: Cart
-        public ViewResult Summary(string returnUrl = null)
+        public ViewResult Summary(Cart cart, string returnUrl = null)
         {
-            Cart cart = CreateShoppingCart();
             CartSummaryViewModel summaryVM = new CartSummaryViewModel {
                 Cart = cart,
                 ReturnUrl = returnUrl
@@ -28,22 +27,12 @@ namespace SportsStore2.WebUI.Controllers
             return View(summaryVM);
         }
 
-        public RedirectToRouteResult AddToCart(int productId, string returnUrl = null) {
-            Cart cart = CreateShoppingCart();
+        public RedirectToRouteResult AddToCart(Cart cart, int productId, string returnUrl = null) {
             Product product = repository.Products.Where(p => p.ProductId == productId).FirstOrDefault();
             if (product != null) {
                 cart.AddToCart(product);
             }
             return RedirectToAction("Summary", new { returnUrl});
-        }
-
-        private Cart CreateShoppingCart() {
-            Cart cart = (Cart)Session["cart"];
-            if (cart == null) {
-                cart = new Cart();
-                Session["cart"] = cart;
-            }
-            return cart;
         }
     }
 }
