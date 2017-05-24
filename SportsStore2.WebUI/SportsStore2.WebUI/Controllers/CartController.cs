@@ -1,5 +1,6 @@
 ﻿using SportsStore2.Domain.Abstract;
 using SportsStore2.Domain.Entities;
+using SportsStore2.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,14 @@ namespace SportsStore2.WebUI.Controllers
         }
 
         // GET: Cart
-        public ViewResult Summary()
+        public ViewResult Summary(string returnUrl = null)
         {
             Cart cart = CreateShoppingCart();
-
-            return View(cart);
+            CartSummaryViewModel summaryVM = new CartSummaryViewModel {
+                Cart = cart,
+                ReturnUrl = returnUrl
+            };
+            return View(summaryVM);
         }
 
         public RedirectToRouteResult AddToCart(int productId, string returnUrl = null) {
@@ -30,7 +34,7 @@ namespace SportsStore2.WebUI.Controllers
             if (product != null) {
                 cart.AddToCart(product);
             }
-            return RedirectToAction("Summary");
+            return RedirectToAction("Summary", new { returnUrl});
         }
 
         private Cart CreateShoppingCart() {
