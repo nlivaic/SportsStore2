@@ -37,9 +37,9 @@ namespace SportsStore2.Tests {
             cart.AddToCart(p4);
 
             // Assert
-            Assert.IsTrue(cart.Items.ToArray()[0].Item.ProductId == 1);
+            Assert.AreSame(cart.Items.ToArray()[0].Item, p1);
             Assert.IsTrue(cart.Items.ToArray()[0].Quantity == 1);
-            Assert.IsTrue(cart.Items.ToArray()[1].Item.ProductId == 4);
+            Assert.AreSame(cart.Items.ToArray()[1].Item, p4);
             Assert.IsTrue(cart.Items.ToArray()[1].Quantity == 1);
         }
 
