@@ -19,7 +19,9 @@ namespace SportsStore2.WebUI.Controllers
         // GET: Cart
         public ViewResult Summary()
         {
-            return View();
+            Cart cart = CreateShoppingCart();
+
+            return View(cart);
         }
 
         public RedirectToRouteResult AddToCart(int productId, string returnUrl = null) {

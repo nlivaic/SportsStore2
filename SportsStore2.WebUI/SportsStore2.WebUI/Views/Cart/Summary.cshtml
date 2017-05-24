@@ -1,7 +1,34 @@
-﻿
+﻿@model SportsStore2.Domain.Entities.Cart
+
 @{
     ViewBag.Title = "Shopping Cart Summary";
 }
 
 <h2>Shopping Cart Summary</h2>
 
+<table width="90%" align="center">
+    <thead>
+        <tr>
+            <th style="text-align:center">Quantity</th>
+            <th style="text-align:left">Item</th>
+            <th style="text-align:right">Price</th>
+            <th style="text-align:right">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Items) {
+        <tr>
+            <td style="text-align:center">@item.Quantity</td>
+            <td style="text-align:left">@item.Item.Name</td>
+            <td style="text-align:right">@item.Item.Price.ToString("c")</td>
+            <td style="text-align:right">@((item.Quantity*item.Item.Price).ToString("c"))</td>
+        </tr>
+    }
+     </tbody>
+     <tfoot>
+         <tr>
+             <td colspan="3" style="text-align:right">Total: @(Model.Items.Sum(i => i.Quantity * i.Item.Price).ToString("c"))</td>
+         </tr>
+
+     </tfoot>
+</table>
