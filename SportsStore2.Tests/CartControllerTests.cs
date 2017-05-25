@@ -81,6 +81,39 @@ namespace SportsStore2.Tests {
             Assert.IsTrue(result.ReturnUrl == "someUrl");
         }
 
+        [TestMethod]
+        public void Can_Remove_Item() {
+            // Arrange
+            CartController target = new CartController(mockRepo.Object);
+            Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
+            Product p4 = mockRepo.Object.Products.Where(p => p.ProductId == 4).FirstOrDefault();
+            Cart cart = new Cart();
+            cart.AddToCart(p1);
+            cart.AddToCart(p4);
 
+            // Act
+            target.DeleteItem(cart, 1, "someUrl");
+
+            // Assert - correct cart item is removed.
+            Assert.IsTrue(cart.Items.Where(p => p.Item.ProductId == 1).FirstOrDefault() == null);
+            Assert.IsTrue(cart.Items.Where(p => p.Item.ProductId == 4).FirstOrDefault() != null);
+        }
+
+        [TestMethod]
+        public void Can_Redirect_On_Remove_Item() {
+            // Arrange
+            CartController target = new CartController(mockRepo.Object);
+            Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
+            Cart cart = new Cart();
+            cart.AddToCart(p1);
+
+            // Act
+            RedirectToRouteResult result = target.DeleteItem(cart, 1, "someUrl");
+
+            // Assert - Redirect to Summary.
+            Assert.IsTrue(result.RouteValues["action"].ToString() == "Summary");
+            // Assert - Redirects and passes correct return Url along.
+            Assert.IsTrue(result.RouteValues["returnUrl"].ToString() == "someUrl");
+        }
     }
 }
