@@ -9,6 +9,7 @@ namespace SportsStore2.Domain.Entities {
         [Display(Name = "Last Name: ")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "Please enter address line.")]
+        [Display(Name = "Line 1: ")]
         public string AddressLine1 { get; set; }
         [Display(Name = "Line 2: ")]
         public string AddressLine2 { get; set; }
