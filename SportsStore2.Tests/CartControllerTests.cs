@@ -115,5 +115,18 @@ namespace SportsStore2.Tests {
             // Assert - Redirects and passes correct return Url along.
             Assert.IsTrue(result.RouteValues["returnUrl"].ToString() == "someUrl");
         }
+
+        [TestMethod]
+        public void Can_Pass_Cart_To_Quick_Summary() {
+            // Arrange
+            CartController target = new CartController(mockRepo.Object);
+            Cart cart = new Cart();
+
+            // Act
+            Cart result = (Cart)(target.QuickSummary(cart).Model);
+
+            // Assert
+            Assert.AreSame(result, cart);
+        }
     }
 }
