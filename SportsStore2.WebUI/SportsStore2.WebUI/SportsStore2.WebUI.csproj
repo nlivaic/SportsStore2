@@ -150,6 +150,7 @@
     <Content Include="Views\Product\ListCategories.cshtml" />
     <Content Include="Views\Cart\Summary.cshtml" />
     <Content Include="Views\Shared\QuickSummary.cshtml" />
+    <Content Include="Views\Cart\Checkout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

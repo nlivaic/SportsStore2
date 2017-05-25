@@ -46,5 +46,12 @@ namespace SportsStore2.WebUI.Controllers
             }
             return RedirectToAction("Summary", new { returnUrl });
         }
+        
+        public ViewResult Checkout(Cart cart) {
+            if (cart.Items.Count() == 0) {
+                ModelState.AddModelError("emptyCart", "Sorry, your cart is empty!");
+            }
+            return View(new ShippingDetails());
+        }
     }
 }
