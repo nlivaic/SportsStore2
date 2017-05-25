@@ -27,6 +27,10 @@ namespace SportsStore2.WebUI.Controllers
             return View(summaryVM);
         }
 
+        public PartialViewResult QuickSummary(Cart cart) {
+            return PartialView(cart);
+        }
+
         public RedirectToRouteResult AddToCart(Cart cart, int productId, string returnUrl = null) {
             Product product = repository.Products.Where(p => p.ProductId == productId).FirstOrDefault();
             if (product != null) {
