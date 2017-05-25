@@ -34,5 +34,13 @@ namespace SportsStore2.WebUI.Controllers
             }
             return RedirectToAction("Summary", new { returnUrl});
         }
+
+        public RedirectToRouteResult DeleteItem(Cart cart, int productId, string returnUrl = null) {
+            Product product = repository.Products.Where(p => p.ProductId == productId).FirstOrDefault();
+            if (product != null) {
+                cart.RemoveFromCart(product);
+            }
+            return RedirectToAction("Summary", new { returnUrl });
+        }
     }
 }
