@@ -48,7 +48,6 @@ namespace SportsStore2.Tests {
             Assert.IsTrue(cart.Items.Count() == 2);
         }
 
-
         [TestMethod]
         public void Can_Redirect_On_Add_Item() {
             // Arrange
@@ -81,5 +80,7 @@ namespace SportsStore2.Tests {
             // Assert - return url is maintained.
             Assert.IsTrue(result.ReturnUrl == "someUrl");
         }
+
+
     }
 }
