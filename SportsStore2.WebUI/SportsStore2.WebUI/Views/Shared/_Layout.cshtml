@@ -14,7 +14,7 @@
         @{ Html.RenderAction("QuickSummary", "Cart"); }
         <div class="title">SPORTS STORE</div>
     </div>
-    <div id="categories">@{ Html.RenderAction("ListCategories"); }</div>
+    <div id="categories">@{ Html.RenderAction("ListCategories", "Product"); }</div>
     <div id="content">
         @RenderBody()
     </div>

@@ -7,9 +7,9 @@
 <h2>List</h2>
 @foreach (var item in Model.Products) {
     <div class="item">
-        Html.RenderPartial("ProductSummary", item);
+        @{ Html.RenderPartial("ProductSummary", item); }
     </div>
-    @using (Html.BeginForm("AddToCart", "Cart")) {
+    using (Html.BeginForm("AddToCart", "Cart")) {
         <input type="hidden" name="productId" value="@item.ProductId" />
         <input type="hidden" name="returnUrl" value="@Request.Url.PathAndQuery" />
         <input type="submit" value="+Add To Cart" class="actionButtons" />
