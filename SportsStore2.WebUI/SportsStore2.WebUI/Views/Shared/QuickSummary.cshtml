@@ -1,0 +1,6 @@
+﻿@model SportsStore2.Domain.Entities.Cart
+
+You have @Model.Items.Count() items in your cart, totalling @(Model.Items.Sum(p => p.Item.Price).ToString("c")).
+<div class="actionButtons">
+    @Html.ActionLink("Checkout Now", "Checkout", "Cart")
+</div>
