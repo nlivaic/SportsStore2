@@ -128,5 +128,74 @@ namespace SportsStore2.Tests {
             // Assert
             Assert.AreSame(result, cart);
         }
+
+        [TestMethod]
+        public void Cannot_Checkout_Empty_Cart() {
+            // Arrange
+            CartController target = new CartController(mockRepo.Object);
+            Cart cart = new Cart();
+
+            // Act
+            ViewResult result = target.Checkout(cart);
+
+            // Assert - an error message exists.
+            Assert.IsTrue(result.ViewData.ModelState["emptyCart"] != null);
+        }
+
+        [TestMethod]
+        public void Can_Checkout_Cart_With_Items() {
+            // Arrange
+            CartController target = new CartController(mockRepo.Object);
+            Cart cart = new Cart();
+            Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
+            cart.AddToCart(p1);
+
+            // Act
+            ViewResult result = target.Checkout(cart);
+
+            // Assert - an error message exists.
+            Assert.IsTrue(result.ViewData.ModelState["emptyCart"] == null);
+        }
+
+        [TestMethod]
+        public void Cannot_Ship_With_Invalid_Details() {
+            // Arrange
+            CartController target = new CartController(mockRepo.Object);
+            target.ModelState.AddModelError("invalidShippingDetails", "Invalid Shipping Details.");
+            Cart cart = new Cart();
+            Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
+            cart.AddToCart(p1);
+            ShippingDetails shippingDetails = new ShippingDetails();
+
+            // Act
+            ViewResult result = target.Checkout(cart, shippingDetails);
+
+            // Assert - Order processor has NOT been called
+
+            // Assert - Model is invalid.
+            Assert.IsTrue(result.ViewData.ModelState.IsValid == false);
+            // Assert - Default view is returned.
+            Assert.IsTrue(result.ViewName == String.Empty);
+        }
+
+        [TestMethod]
+        public void Can_Ship_With_Valid_Details() {
+            // Arrange
+            CartController target = new CartController(mockRepo.Object);
+            Cart cart = new Cart();
+            Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
+            cart.AddToCart(p1);
+            ShippingDetails shippingDetails = new ShippingDetails();
+
+            // Act
+            ViewResult result = target.Checkout(cart, shippingDetails);
+
+            // Assert - Order processor has been called. 
+
+            // Assert - Model is valid.
+            Assert.IsTrue(result.ViewData.ModelState.IsValid == true);
+            // Assert - Completed view has been returned.
+            Assert.IsTrue(result.ViewName == "Completed");
+        }
     }
 }
