@@ -1,0 +1,23 @@
+﻿@model SportsStore2.Domain.Entities.ShippingDetails
+
+@{
+    ViewBag.Title = "Completed";
+}
+
+<h2>Completed</h2>
+
+<p>Thank you for shopping with us. Your order has been processed and will be sent to the following address:</p>
+@String.Format("{0} {1}", Model.FirstName, @Model.LastName) <br />
+@Model.AddressLine1 <br />
+@if (Model.AddressLine2 != null) {
+    @Model.AddressLine2 <br />
+}
+@if (Model.AddressLine3 != null) {
+    @Model.AddressLine3 <br />
+}
+Your email address is @Model.Email
+@if (Model.GiftWrap) {
+    @:We'll gift wrap it for you!
+}
+
+

@@ -9,13 +9,8 @@
 @Html.ValidationSummary()
 
 @if (ViewData.ModelState["emptyCart"] == null) {
-
-    @*@Html.TextBoxFor(x => x.FirstName)<br />
-    @Html.TextBoxFor(x => x.LastName)<br />
-    @Html.TextBoxFor(x => x.AddressLine1)<br />
-    @Html.TextBoxFor(x => x.AddressLine2)<br />
-    @Html.TextBoxFor(x => x.AddressLine3)<br />
-    @Html.TextBoxFor(x => x.Email)<br />
-    @Html.CheckBoxFor(x => x.GiftWrap)*@
-    @Html.EditorForModel()
+    using (Html.BeginForm()) {
+        @Html.EditorForModel()
+        <input type="submit" value="Complete Checkout" />
+    }
 }

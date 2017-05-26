@@ -16,7 +16,7 @@ namespace SportsStore2.Domain.Entities {
         [Display(Name = "Line 3: ")]
         public string AddressLine3 { get; set; }
         [Required(ErrorMessage = "Please enter address line.")]
-        [RegularExpression("[a-zA-Z0-9][a-zA-Z0-9.]?@[a-zA-Z0-9]{3,}\\.[a-zA-Z]{2,}")]
+        [RegularExpression(@"[a-zA-Z0-9][a-zA-Z0-9.]*@[a-zA-Z0-9]{3,}\.[a-zA-Z]{2,}")]
         public string Email { get; set; }
         [Display(Name = "Gift wrap: ")]
         public bool GiftWrap { get; set; }

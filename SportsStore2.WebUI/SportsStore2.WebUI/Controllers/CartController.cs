@@ -9,8 +9,7 @@ using System.Web.Mvc;
 
 namespace SportsStore2.WebUI.Controllers
 {
-    public class CartController : Controller
-    {
+    public class CartController : Controller {
         private IProductRepository repository;
 
         public CartController(IProductRepository repo) {
@@ -18,8 +17,7 @@ namespace SportsStore2.WebUI.Controllers
         }
 
         // GET: Cart
-        public ViewResult Summary(Cart cart, string returnUrl = null)
-        {
+        public ViewResult Summary(Cart cart, string returnUrl = null) {
             CartSummaryViewModel summaryVM = new CartSummaryViewModel {
                 Cart = cart,
                 ReturnUrl = returnUrl
@@ -36,7 +34,7 @@ namespace SportsStore2.WebUI.Controllers
             if (product != null) {
                 cart.AddToCart(product);
             }
-            return RedirectToAction("Summary", new { returnUrl});
+            return RedirectToAction("Summary", new { returnUrl });
         }
 
         public RedirectToRouteResult DeleteItem(Cart cart, int productId, string returnUrl = null) {
@@ -46,12 +44,20 @@ namespace SportsStore2.WebUI.Controllers
             }
             return RedirectToAction("Summary", new { returnUrl });
         }
-        
+        [HttpGet]
         public ViewResult Checkout(Cart cart) {
             if (cart.Items.Count() == 0) {
                 ModelState.AddModelError("emptyCart", "Sorry, your cart is empty!");
             }
             return View(new ShippingDetails());
+        }
+
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails) {
+            if (ModelState.IsValid) {
+                // Process the order.
+            }
+            return View("Completed", shippingDetails);
         }
     }
 }
