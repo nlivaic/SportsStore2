@@ -56,6 +56,8 @@ namespace SportsStore2.WebUI.Controllers
         public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails) {
             if (ModelState.IsValid) {
                 // Process the order.
+            } else {
+                return View(shippingDetails);
             }
             return View("Completed", shippingDetails);
         }
