@@ -13,7 +13,7 @@
     <div id="header">
         <div class="title">SPORTS STORE</div>
     </div>
-    <div id="categories"></div>
+    <div id="categories">@{ Html.RenderAction("ListCategories"); }</div>
     <div id="content">
         @RenderBody()
     </div>
