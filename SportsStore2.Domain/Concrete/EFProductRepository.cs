@@ -12,5 +12,14 @@ namespace SportsStore2.Domain.Concrete {
         public IQueryable<Product> Products {
             get { return context.Products;  }
         }
+
+        public void SaveProduct(Product product) {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteProduct(Product product) {
+            throw new NotImplementedException();
+        }
+
     }
 }
