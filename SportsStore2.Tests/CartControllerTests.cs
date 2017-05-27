@@ -32,7 +32,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Add_Item() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             Product p4 = mockRepo.Object.Products.Where(p => p.ProductId == 4).FirstOrDefault();
             Cart cart = new Cart();
@@ -51,7 +51,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Redirect_On_Add_Item() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             Cart cart = new Cart();
 
@@ -67,7 +67,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Create_Correct_Summary_View_Model() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             cart.AddToCart(p1);
@@ -84,7 +84,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Remove_Item() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             Product p4 = mockRepo.Object.Products.Where(p => p.ProductId == 4).FirstOrDefault();
             Cart cart = new Cart();
@@ -102,7 +102,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Redirect_On_Remove_Item() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             Cart cart = new Cart();
             cart.AddToCart(p1);
@@ -119,7 +119,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Pass_Cart_To_Quick_Summary() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
 
             // Act
@@ -132,7 +132,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Cannot_Checkout_Empty_Cart() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
 
             // Act
@@ -145,7 +145,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Checkout_Cart_With_Items() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             cart.AddToCart(p1);
@@ -160,7 +160,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Cannot_Ship_With_Invalid_Details() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             target.ModelState.AddModelError("invalidShippingDetails", "Invalid Shipping Details.");
             Cart cart = new Cart();
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
@@ -181,7 +181,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Ship_With_Valid_Details() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             cart.AddToCart(p1);
