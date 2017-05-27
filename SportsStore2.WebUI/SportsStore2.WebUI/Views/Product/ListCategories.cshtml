@@ -1,0 +1,6 @@
+﻿@model SportsStore2.WebUI.Models.CategoryViewModel
+
+@foreach (var categoryName in Model.Categories) {
+    @Html.RouteLink(categoryName, new { controller = "Product", action = "List", category = categoryName, page = 1 }, new { @class = categoryName == Model.ChosenCategory ? "selected" : String.Empty })
+}
+
