@@ -11,9 +11,11 @@ namespace SportsStore2.WebUI.Controllers
 {
     public class CartController : Controller {
         private IProductRepository repository;
+        public IOrderProcessor processor;
 
-        public CartController(IProductRepository repo) {
+        public CartController(IProductRepository repo, IOrderProcessor proc) {
             repository = repo;
+            processor = proc;
         }
 
         // GET: Cart
@@ -56,6 +58,7 @@ namespace SportsStore2.WebUI.Controllers
         public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails) {
             if (ModelState.IsValid) {
                 // Process the order.
+                processor.ProcessOrder(cart, shippingDetails);
                 // Reset cart.
                 cart.Clear();
             } else {
