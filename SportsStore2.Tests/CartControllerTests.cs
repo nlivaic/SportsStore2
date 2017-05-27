@@ -12,6 +12,7 @@ namespace SportsStore2.Tests {
     [TestClass]
     public class CartControllerTests {
         Mock<IProductRepository> mockRepo;
+        Mock<IOrderProcessor> mockProc;
 
         [TestInitialize]
         public void TestInitialize() {
@@ -27,12 +28,13 @@ namespace SportsStore2.Tests {
                 new Product { ProductId = 8, Name = "Name8", Description = "Desc8", Category = "Cat3", Price = 19.99m},
                 new Product { ProductId = 9, Name = "Name9", Description = "Desc9", Category = "Cat1", Price = 76.99m},
             }.AsQueryable<Product>());
+            mockProc = new Mock<IOrderProcessor>();
         }
 
         [TestMethod]
         public void Can_Add_Item() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             Product p4 = mockRepo.Object.Products.Where(p => p.ProductId == 4).FirstOrDefault();
             Cart cart = new Cart();
@@ -51,7 +53,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Redirect_On_Add_Item() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             Cart cart = new Cart();
 
@@ -67,7 +69,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Create_Correct_Summary_View_Model() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             cart.AddToCart(p1);
@@ -84,7 +86,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Remove_Item() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             Product p4 = mockRepo.Object.Products.Where(p => p.ProductId == 4).FirstOrDefault();
             Cart cart = new Cart();
@@ -102,7 +104,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Redirect_On_Remove_Item() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             Cart cart = new Cart();
             cart.AddToCart(p1);
@@ -119,7 +121,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Pass_Cart_To_Quick_Summary() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
 
             // Act
@@ -132,7 +134,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Cannot_Checkout_Empty_Cart() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
 
             // Act
@@ -145,7 +147,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Checkout_Cart_With_Items() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, null);
             Cart cart = new Cart();
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             cart.AddToCart(p1);
@@ -160,7 +162,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Cannot_Ship_With_Invalid_Details() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, mockProc.Object);
             target.ModelState.AddModelError("invalidShippingDetails", "Invalid Shipping Details.");
             Cart cart = new Cart();
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
@@ -171,7 +173,7 @@ namespace SportsStore2.Tests {
             ViewResult result = target.Checkout(cart, shippingDetails);
 
             // Assert - Order processor has NOT been called
-
+            mockProc.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Never);
             // Assert - Model is invalid.
             Assert.IsTrue(result.ViewData.ModelState.IsValid == false);
             // Assert - Default view is returned.
@@ -181,7 +183,7 @@ namespace SportsStore2.Tests {
         [TestMethod]
         public void Can_Ship_With_Valid_Details() {
             // Arrange
-            CartController target = new CartController(mockRepo.Object);
+            CartController target = new CartController(mockRepo.Object, mockProc.Object);
             Cart cart = new Cart();
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
             cart.AddToCart(p1);
@@ -191,7 +193,7 @@ namespace SportsStore2.Tests {
             ViewResult result = target.Checkout(cart, shippingDetails);
 
             // Assert - Order processor has been called. 
-
+            mockProc.Verify(m => m.ProcessOrder(cart, shippingDetails), Times.Once);
             // Assert - Model is valid.
             Assert.IsTrue(result.ViewData.ModelState.IsValid == true);
             // Assert - Completed view has been returned.
