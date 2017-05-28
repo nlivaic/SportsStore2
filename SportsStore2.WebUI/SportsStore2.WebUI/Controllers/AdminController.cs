@@ -21,11 +21,36 @@ namespace SportsStore2.WebUI.Controllers
             return View(repository.Products);
         }
 
+        public ViewResult Create() {
+            return View("Edit", new Product());
+        }
+
+        [HttpGet]
+        public ViewResult Edit(int productId) {
+            Product product = repository.Products.Where(p => p.ProductId == productId).FirstOrDefault();
+            if (product != null) {
+                return View(product);
+            } else {
+                return View("List");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Product product) {
+            if (ModelState.IsValid) {
+                repository.SaveProduct(product);
+                TempData["message"] = String.Format("Product {0} edited/created.", product.Name);
+                return RedirectToAction("List");
+            } else {
+                return View("Edit", product);
+            }
+        }
+
         // GET: Admin
         public RedirectToRouteResult Delete(int productId) {
             Product product = repository.Products.Where(p => p.ProductId == productId).FirstOrDefault();
             if (product != null) {
-                //repository.DeleteProduct(product);
+                repository.DeleteProduct(product);
                 TempData["message"] = String.Format("Product {0} removed.", product.Name);
             }
             return RedirectToAction("List");
