@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace SportsStore2.Domain.Entities {
     public class Product {
-        [ReadOnly(true)]
+        [HiddenInput(DisplayValue = false)]
         public int ProductId { get; set; }
         [Required(ErrorMessage = "Please enter product name.")]
         public string Name { get; set; }
