@@ -8,9 +8,7 @@
 <h2>Edit</h2>
 
 @using (Html.BeginForm("Edit", "Admin")) {
-    @Html.EditorFor(m => m.Name)<br />
-    @Html.EditorFor(m => m.Description)<br />
-    @Html.EditorFor(m => m.Category)<br />
-    @Html.EditorFor(m => m.Price)<br />
+    @Html.EditorForModel()
+    <br />
     <input type="submit" value="Store Product" />
 }
