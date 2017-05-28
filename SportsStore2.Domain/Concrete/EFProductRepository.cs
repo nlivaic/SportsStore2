@@ -14,7 +14,13 @@ namespace SportsStore2.Domain.Concrete {
         }
 
         public void SaveProduct(Product product) {
-            throw new NotImplementedException();
+            context.Products.Attach(product);
+            if (product.ProductId == 0) {
+                context.Entry(product).State = System.Data.Entity.EntityState.Added;
+            } else {
+                context.Entry(product).State = System.Data.Entity.EntityState.Modified;
+            }
+            context.SaveChanges();
         }
 
         public void DeleteProduct(Product product) {
