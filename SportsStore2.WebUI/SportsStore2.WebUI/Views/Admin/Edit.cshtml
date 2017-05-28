@@ -1,0 +1,16 @@
+﻿@model SportsStore2.Domain.Entities.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Admin")) {
+    @Html.EditorFor(m => m.Name)<br />
+    @Html.EditorFor(m => m.Description)<br />
+    @Html.EditorFor(m => m.Category)<br />
+    @Html.EditorFor(m => m.Price)<br />
+    <input type="submit" value="Store Product" />
+}
