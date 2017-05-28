@@ -23,7 +23,8 @@ namespace SportsStore2.Domain.Concrete {
         }
 
         public void DeleteProduct(Product product) {
-            throw new NotImplementedException();
+            context.Products.Remove(product);
+            context.SaveChanges();
         }
 
     }
