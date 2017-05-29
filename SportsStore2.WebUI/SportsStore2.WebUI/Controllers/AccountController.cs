@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsStore2.Domain.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,9 @@ namespace SportsStore2.WebUI.Controllers
 {
     public class AccountController : Controller
     {
-        private IAuthentication authentication;
+        private IAuthorize authentication;
 
-        public AccountController(IAuthentication auth) {
+        public AccountController(IAuthorize auth) {
             authentication = auth;
         }
 
