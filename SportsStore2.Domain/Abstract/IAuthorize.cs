@@ -1,5 +1,5 @@
 ﻿namespace SportsStore2.Domain.Abstract {
-    interface IAuthorize {
+    public interface IAuthorize {
         bool Authorize(string username, string password);
     }
 }
