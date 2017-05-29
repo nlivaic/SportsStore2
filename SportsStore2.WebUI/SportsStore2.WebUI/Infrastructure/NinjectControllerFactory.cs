@@ -37,6 +37,7 @@ namespace SportsStore2.WebUI.Infrastructure {
 
             ninjectKernel.Bind<IProductRepository>().To<EFProductRepository>();
             ninjectKernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>().WithConstructorArgument("emailSettings", new EmailSettings());
+            ninjectKernel.Bind<IAuthorize>().To<FormsAuthorization>();
         }
     }
 }
