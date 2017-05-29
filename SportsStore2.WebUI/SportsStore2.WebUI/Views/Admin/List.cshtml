@@ -1,0 +1,36 @@
+﻿@model IEnumerable<SportsStore2.Domain.Entities.Product>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "List";
+}
+
+<h2>Product List</h2>
+
+<table class="Grid">
+    <thead>
+        <tr>
+            <th style="text-align:center">Product Id</th>
+            <th style="text-align:left">Name</th>
+            <th style="text-align:right">Price</th>
+            <th style="text-align:right">Delete</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model) {
+        <tbody>
+            <tr>
+                <td style="text-align:center">@Html.ActionLink(item.ProductId.ToString(), "Edit", new { productId = item.ProductId }) </td>
+                <td style="text-align:left">@item.Name</td>
+                <td style="text-align:right">@(item.Price.ToString("c"))</td>
+                <td style="text-align:right">
+                    <div class="actionButtons">
+                        @Html.ActionLink("Delete", "Delete", new { productId = item.ProductId })
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+<div class="actionButtons">
+    @Html.ActionLink("Create a new product", "Create")
+</div>
