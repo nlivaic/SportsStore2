@@ -15,10 +15,20 @@ namespace SportsStore2.WebUI.Controllers
             authentication = auth;
         }
 
-        // GET: Account
-        public RedirectResult LogOn(string returnUrl)
+        [HttpGet]
+        public ViewResult LogOn(string returnUrl)
         {
-            return Redirect(returnUrl);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult LogOn(string username, string password, string returnUrl) {
+            if (authentication.Authorize(username, password)) {
+                return Redirect(returnUrl);
+            } else {
+                ModelState.AddModelError("", "Invalid credentials.");
+            }
+            return View();
         }
     }
 }
