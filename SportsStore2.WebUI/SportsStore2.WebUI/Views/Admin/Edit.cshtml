@@ -7,8 +7,15 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm("Edit", "Admin")) {
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" })) {
     @Html.EditorForModel()
+    @:Image:
+    if (Model.ImageData != null) {
+        <img height="50" width="50" src="@Url.Action("GetImage", "Product", new { productId = Model.ProductId })" />
+    } else {
+        @:None
+    }
+    <input type="file" name="uploadFile" />
     <br />
     <input type="submit" value="Store Product" />
 }
