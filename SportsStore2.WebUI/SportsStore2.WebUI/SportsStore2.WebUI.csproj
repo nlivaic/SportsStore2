@@ -134,6 +134,7 @@
     <Compile Include="Binders\CartModelBinder.cs" />
     <Compile Include="Models\CartSummaryViewModel.cs" />
     <Compile Include="Models\ListViewModel.cs" />
+    <Compile Include="Models\LogOnViewModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

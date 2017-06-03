@@ -1,4 +1,5 @@
 ﻿using SportsStore2.Domain.Abstract;
+using SportsStore2.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,9 @@ namespace SportsStore2.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogOn(string username, string password, string returnUrl) {
-            if (authentication.Authorize(username, password)) {
-                return Redirect(returnUrl);
+        public ActionResult LogOn(LogOnViewModel logOn) {
+            if (authentication.Authorize(logOn.Username, logOn.Password)) {
+                return Redirect(logOn.ReturnUrl);
             } else {
                 ModelState.AddModelError("", "Invalid credentials.");
             }
