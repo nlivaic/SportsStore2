@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "LogOn";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>LogOn</h2>
+@Html.ValidationSummary()
+@using (Html.BeginForm()) {
+    @Html.TextBox("username")<br />
+    @Html.Password("password")<br />
+
+    <input type="submit" value="Log On" />
+}
