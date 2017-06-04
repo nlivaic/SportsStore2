@@ -22,7 +22,7 @@ namespace SportsStore2.Tests {
                 new Product { ProductId = 3, Name = "Name3", Description = "Desc3", Category = "Cat1", Price = 99.99m},
                 new Product { ProductId = 4, Name = "Name4", Description = "Desc4", Category = "Cat2", Price = 109.99m},
                 new Product { ProductId = 5, Name = "Name5", Description = "Desc5", Category = "Cat4", Price = 75000m},
-                new Product { ProductId = 6, Name = "Name6", Description = "Desc6", Category = "Cat4", Price = 75.99m},
+                new Product { ProductId = 6, Name = "Name6", Description = "Desc6", Category = "Cat4", Price = 75.99m, ImageData = new byte[3], ImageMimeType = "image/png"},
                 new Product { ProductId = 7, Name = "Name7", Description = "Desc7", Category = "Cat3", Price = 137.99m},
                 new Product { ProductId = 8, Name = "Name8", Description = "Desc8", Category = "Cat3", Price = 19.99m},
                 new Product { ProductId = 9, Name = "Name9", Description = "Desc9", Category = "Cat1", Price = 76.99m},
@@ -140,5 +140,39 @@ namespace SportsStore2.Tests {
             Assert.IsTrue(pagingInfo.PageSize == 4);
             Assert.IsTrue(pagingInfo.TotalItems == 3);
         }
+
+        [TestMethod]
+        public void Cannot_Retrieve_Image_Data_For_Invalid_Product() {
+            // Arrange
+            ProductController target = new ProductController(mock.Object);
+
+            // Act
+            FileContentResult result = target.GetImage(1);
+
+            // Assert - no image returned
+            Assert.IsTrue(result == null);
+        }
+
+        [TestMethod]
+        public void Can_Retrieve_Image_Data() {
+            // Arrange
+            ProductController target = new ProductController(mock.Object);
+            Product p6 = mock.Object.Products.Where(p => p.ProductId == 6).FirstOrDefault();
+
+            // Act
+            FileContentResult result = target.GetImage(6);
+
+            // Assert - image returned
+            Assert.IsTrue(result != null);
+            // Assert - image of appropriate size and contents is returned
+            Assert.IsTrue(result.FileContents.Length == p6.ImageData.Length);
+            Assert.IsTrue(result.FileContents[0] == p6.ImageData[0]);
+            Assert.IsTrue(result.FileContents[1] == p6.ImageData[1]);
+            Assert.IsTrue(result.FileContents[2] == p6.ImageData[2]);
+            // Assert - image of appropriate MIME type is returned
+            Assert.IsTrue(result.ContentType == "image/png");
+
+        }
+
     }
 }

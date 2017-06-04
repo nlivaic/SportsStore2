@@ -15,5 +15,8 @@ namespace SportsStore2.Domain.Entities {
         [Range(0.00, double.MaxValue, ErrorMessage = "Please enter a valid price amount.")]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public string ImageMimeType { get; set; }
+        public byte[] ImageData { get; set; }
     }
 }
