@@ -93,7 +93,7 @@ namespace SportsStore2.Tests {
             target.ModelState.AddModelError("", "someError");
 
             // Act - Save product details.
-            ActionResult result = target.Edit(p1);
+            ActionResult result = target.Edit(p1, null);
 
             // Assert - Return Edit view.
             Assert.IsTrue(((ViewResult)result).ViewName == "Edit");
@@ -110,7 +110,7 @@ namespace SportsStore2.Tests {
             Product p1 = mockRepo.Object.Products.Where(p => p.ProductId == 1).FirstOrDefault();
 
             // Act - Save product details.
-            ActionResult result = target.Edit(p1);
+            ActionResult result = target.Edit(p1, null);
 
             // Assert - Return List view.
             Assert.IsTrue(((RedirectToRouteResult)result).RouteValues["action"].ToString() == "List");
